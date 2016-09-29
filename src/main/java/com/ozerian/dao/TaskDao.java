@@ -1,8 +1,12 @@
 package com.ozerian.dao;
 
+import com.ozerian.entity.Task;
+
+import java.util.List;
+
 public interface TaskDao {
 
-    void addTask();
+    boolean addTask(Task task);
 
-    void getAllTasks();
+    List<Task> getAllTasks();
 }

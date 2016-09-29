@@ -1,9 +1,13 @@
 package com.ozerian;
 
 
+import com.ozerian.dao.TaskDao;
+import com.ozerian.dao.TaskDaoImpl;
+import com.ozerian.entity.Task;
 import com.ozerian.util.InOutData;
 
 import java.io.IOException;
+import java.text.ParseException;
 
 public class TaskManagerCLI {
     public static void main(String[] args) {
@@ -17,14 +21,17 @@ public class TaskManagerCLI {
                 System.out.println("If you want to see all tasks, please, enter \"2\"");
                 System.out.println("If you want to exit, please, enter \"3\"");
 
-                int choice = InOutData.enteredChoice();
+                String choice = InOutData.enteredChoice();
 
                 switch (choice) {
-                    case 1:
+                    case "1":
+                        Task task = InOutData.createTask();
+                        TaskDao taskDao = new TaskDaoImpl();
+                        taskDao.addTask(task);
                         break;
-                    case 2:
+                    case "2":
                         break;
-                    case 3:
+                    case "3":
                         isContinue = false;
                         break;
                 }
@@ -34,6 +41,8 @@ public class TaskManagerCLI {
 
         } catch (IOException ex) {
             System.out.println("Wrong input data!");
+        } catch (ParseException e) {
+            e.printStackTrace();
         }
     }
 }

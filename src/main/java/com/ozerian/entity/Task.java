@@ -7,12 +7,12 @@ public class Task {
     private long id;
     private String name;
     private Date doneDate;
-    private TaskPriority priority;
+    private String priority;
 
     public Task() {
     }
 
-    public Task(long id, String name, Date doneDate, TaskPriority priority) {
+    public Task(long id, String name, Date doneDate, String priority) {
         this.id = id;
         this.name = name;
         this.doneDate = doneDate;
@@ -43,11 +43,11 @@ public class Task {
         this.doneDate = doneDate;
     }
 
-    public TaskPriority getPriority() {
+    public String getPriority() {
         return priority;
     }
 
-    public void setPriority(TaskPriority priority) {
+    public void setPriority(String priority) {
         this.priority = priority;
     }
 }
