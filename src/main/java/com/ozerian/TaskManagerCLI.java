@@ -32,7 +32,22 @@ public class TaskManagerCLI {
                         break;
                     case "2":
                         List<Task> tasks = taskDao.getAllTasks();
+
+                        if (tasks.isEmpty()) {
+                            System.out.println("There are no tasks!");
+                            break;
+                        }
                         tasks.forEach(System.out::println);
+                        System.out.println("If you have done some task enter \"1\". Back to the menu - \"2\". For Exit - \"3\"");
+                        String currentChoice = InOutData.enteredChoice();
+
+                        if ("1".equals(currentChoice)) {
+                            System.out.println("Please entered it's id");
+                            int taskId = InOutData.getDoneTaskId();
+                            taskDao.makeTaskDone(taskId);
+                        } else if ("3".equals(currentChoice)) {
+                            isContinue = false;
+                        }
                         break;
                     case "3":
                         isContinue = false;
