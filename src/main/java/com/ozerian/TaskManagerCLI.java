@@ -13,6 +13,10 @@ public class TaskManagerCLI {
             System.out.println("Hi! Welcome to th TaskManager program!");
             do {
 
+                System.out.println("If you want to add new task, please, enter \"1\"");
+                System.out.println("If you want to see all tasks, please, enter \"2\"");
+                System.out.println("If you want to exit, please, enter \"3\"");
+
                 int choice = InOutData.enteredChoice();
 
                 switch (choice) {
