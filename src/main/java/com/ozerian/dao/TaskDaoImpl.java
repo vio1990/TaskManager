@@ -32,9 +32,9 @@ public class TaskDaoImpl implements TaskDao {
     @Override
     public List<Task> getAllTasks() {
         List<Task> tasks = new ArrayList<>();
-        String sqlQuery = "SELECT * FROM tasks;";
+        String sql = "SELECT * FROM tasks;";
         try (Connection connection = ConnectionManager.getConnection();
-             PreparedStatement prepStatement = connection.prepareStatement(sqlQuery);
+             PreparedStatement prepStatement = connection.prepareStatement(sql);
              ResultSet resultSet = prepStatement.executeQuery()) {
 
             while (resultSet.next()) {
@@ -47,13 +47,47 @@ public class TaskDaoImpl implements TaskDao {
         return tasks;
     }
 
+    @Override
+    public boolean makeTaskDone(int taskId) {
+        String sql = "INSERT INTO done_tasks SELECT * FROM tasks WHERE id= ?";
+
+        try (Connection connection = ConnectionManager.getConnection();
+             PreparedStatement prepStatement = connection.prepareStatement(sql)) {
+            prepStatement.setInt(1, taskId);
+            prepStatement.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        deleteTaskById(taskId);
+        return false;
+    }
+
+    @Override
+    public boolean deleteTaskById(int taskId) {
+        String sql = "DELETE FROM tasks WHERE id= ?";
+
+        try (Connection connection = ConnectionManager.getConnection();
+             PreparedStatement prepStatement = connection.prepareStatement(sql)) {
+            prepStatement.setInt(1, taskId);
+            return prepStatement.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+
     private void addTasksToList(List<Task> tasks, ResultSet resultSet) throws SQLException {
         Task task = new Task();
         task.setId(resultSet.getInt("id"));
         task.setName(resultSet.getString("task_name"));
         task.setDoneDate(new Date(resultSet.getDate("done_date").getTime()));
         task.setPriority(resultSet.getString("priority"));
+
+        if (task.getDoneDate().before(new Date())) {
+            task.setExpired(true);
+        }
+
         tasks.add(task);
     }
-
 }
