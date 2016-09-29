@@ -13,30 +13,18 @@ import java.util.List;
 
 public class TaskDaoImpl implements TaskDao {
 
-    private Connection connection;
-    private PreparedStatement prepStatement;
-    private ResultSet resultSet;
-
     @Override
     public boolean addTask(Task task) {
 
         String sqlQuery = "INSERT INTO tasks VALUES ( DEFAULT , ?, ?, ?)";
-        try {
-            connection = ConnectionManager.getConnection();
-            prepStatement = connection.prepareStatement(sqlQuery);
+        try (Connection connection = ConnectionManager.getConnection();
+             PreparedStatement prepStatement = connection.prepareStatement(sqlQuery)) {
             prepStatement.setString(1, task.getName());
             prepStatement.setDate(2, new java.sql.Date(task.getDoneDate().getTime()));
             prepStatement.setString(3, task.getPriority());
             return prepStatement.execute();
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            try {
-                prepStatement.close();
-                connection.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
         }
         return false;
     }
@@ -45,28 +33,21 @@ public class TaskDaoImpl implements TaskDao {
     public List<Task> getAllTasks() {
         List<Task> tasks = new ArrayList<>();
         String sqlQuery = "SELECT * FROM tasks;";
-        try {
-            connection = ConnectionManager.getConnection();
-            prepStatement = connection.prepareStatement(sqlQuery);
-            resultSet = prepStatement.executeQuery();
+        try (Connection connection = ConnectionManager.getConnection();
+             PreparedStatement prepStatement = connection.prepareStatement(sqlQuery);
+             ResultSet resultSet = prepStatement.executeQuery()) {
+
             while (resultSet.next()) {
-                addTasksToList(tasks);
+                addTasksToList(tasks, resultSet);
             }
+
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            try {
-                resultSet.close();
-                prepStatement.close();
-                connection.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
         }
         return tasks;
     }
 
-    private void addTasksToList(List<Task> tasks) throws SQLException {
+    private void addTasksToList(List<Task> tasks, ResultSet resultSet) throws SQLException {
         Task task = new Task();
         task.setId(resultSet.getInt("id"));
         task.setName(resultSet.getString("task_name"));
