@@ -8,11 +8,13 @@ import com.ozerian.util.InOutData;
 
 import java.io.IOException;
 import java.text.ParseException;
+import java.util.List;
 
 public class TaskManagerCLI {
     public static void main(String[] args) {
 
         try {
+            TaskDao taskDao = new TaskDaoImpl();
             boolean isContinue = true;
             System.out.println("Hi! Welcome to th TaskManager program!");
             do {
@@ -26,10 +28,11 @@ public class TaskManagerCLI {
                 switch (choice) {
                     case "1":
                         Task task = InOutData.createTask();
-                        TaskDao taskDao = new TaskDaoImpl();
                         taskDao.addTask(task);
                         break;
                     case "2":
+                        List<Task> tasks = taskDao.getAllTasks();
+                        tasks.forEach(System.out::println);
                         break;
                     case "3":
                         isContinue = false;
