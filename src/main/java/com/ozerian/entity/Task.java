@@ -8,6 +8,7 @@ public class Task {
     private String name;
     private Date doneDate;
     private String priority;
+    private boolean isExpired;
 
     public Task() {
     }
@@ -17,6 +18,7 @@ public class Task {
         this.name = name;
         this.doneDate = doneDate;
         this.priority = priority;
+        this.isExpired = false;
     }
 
     public long getId() {
@@ -51,6 +53,14 @@ public class Task {
         this.priority = priority;
     }
 
+    public boolean isExpired() {
+        return isExpired;
+    }
+
+    public void setExpired(boolean expired) {
+        isExpired = expired;
+    }
+
     @Override
     public String toString() {
         return "Task{" +
@@ -58,6 +68,7 @@ public class Task {
                 ", name='" + name + '\'' +
                 ", doneDate=" + doneDate +
                 ", priority='" + priority + '\'' +
+                ", isExpired=" + isExpired +
                 '}';
     }
 }
