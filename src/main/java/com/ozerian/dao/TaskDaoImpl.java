@@ -126,7 +126,6 @@ public class TaskDaoImpl implements TaskDao {
         return false;
     }
 
-
     /**
      * Private util method for addition task to list with check,
      * if this task is expired (through java.util.Date "before" method).
