@@ -9,6 +9,9 @@ import java.io.InputStreamReader;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
+/**
+ * Util class for work with streams and handling input user's data.
+ */
 public final class InOutData {
 
     /**
