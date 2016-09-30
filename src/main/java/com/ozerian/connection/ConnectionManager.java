@@ -4,6 +4,9 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+/**
+ * Class for provision of data vase connection.
+ */
 public final class ConnectionManager {
     private static final String URL = "jdbc:mysql://localhost:3306/taskmanager";
     private static final String DRIVER_NAME = "com.mysql.jdbc.Driver";
@@ -11,6 +14,11 @@ public final class ConnectionManager {
     private static final String PASSWORD = "root";
     private static Connection connection;
 
+    /**
+     * This method provides connection to database.
+     *
+     * @return Connection
+     */
     public static Connection getConnection() {
         try {
             Class.forName(DRIVER_NAME);
