@@ -17,6 +17,7 @@ public class TaskManagerCLI {
             TaskDao taskDao = new TaskDaoImpl();
             boolean isContinue = true;
             System.out.println("Hi! Welcome to th TaskManager program!");
+
             do {
 
                 System.out.println("If you want to add new task, please, enter \"1\"");
@@ -37,8 +38,19 @@ public class TaskManagerCLI {
                             System.out.println("There are no tasks!");
                             break;
                         }
-                        tasks.forEach(System.out::println);
-                        System.out.println("If you have done some task enter \"1\". Back to the menu - \"2\". For Exit - \"3\"");
+                        System.out.println("The list of all actual tasks!");
+
+                        for (Task actualTask : tasks) {
+                            System.out.print(actualTask);
+
+                            if (actualTask.isExpired() == true) {
+                                System.out.print("   EXPIRED!!!");
+                            }
+
+                            System.out.println();
+                        }
+
+                        System.out.println("If you have done some task enter \"1\". Back to the menu - \"2\". See list of done tasks - \"3\"");
                         String currentChoice = InOutData.enteredChoice();
 
                         if ("1".equals(currentChoice)) {
@@ -46,7 +58,14 @@ public class TaskManagerCLI {
                             int taskId = InOutData.getDoneTaskId();
                             taskDao.makeTaskDone(taskId);
                         } else if ("3".equals(currentChoice)) {
-                            isContinue = false;
+                            List<Task> doneTasks = taskDao.getAllDoneTasks();
+
+                            if (doneTasks.isEmpty()) {
+                                System.out.println("There are no done tasks!");
+                                break;
+                            }
+                            System.out.println("The list of all done tasks!");
+                            doneTasks.forEach(System.out::println);
                         }
                         break;
                     case "3":

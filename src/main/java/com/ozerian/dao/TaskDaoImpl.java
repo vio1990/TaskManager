@@ -48,6 +48,24 @@ public class TaskDaoImpl implements TaskDao {
     }
 
     @Override
+    public List<Task> getAllDoneTasks() {
+        List<Task> doneTasks = new ArrayList<>();
+        String sql = "SELECT * FROM done_tasks;";
+        try (Connection connection = ConnectionManager.getConnection();
+             PreparedStatement prepStatement = connection.prepareStatement(sql);
+             ResultSet resultSet = prepStatement.executeQuery()) {
+
+            while (resultSet.next()) {
+                addTasksToList(doneTasks, resultSet);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return doneTasks;
+    }
+
+    @Override
     public boolean makeTaskDone(int taskId) {
         String sql = "INSERT INTO done_tasks SELECT * FROM tasks WHERE id= ?";
 

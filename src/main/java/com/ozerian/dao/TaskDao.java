@@ -10,6 +10,8 @@ public interface TaskDao {
 
     List<Task> getAllTasks();
 
+    List<Task> getAllDoneTasks();
+
     boolean makeTaskDone(int taskId);
 
     boolean deleteTaskById(int taskId);

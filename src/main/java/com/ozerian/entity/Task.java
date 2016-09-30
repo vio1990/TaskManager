@@ -68,7 +68,6 @@ public class Task {
                 ", name='" + name + '\'' +
                 ", doneDate=" + doneDate +
                 ", priority='" + priority + '\'' +
-                ", isExpired=" + isExpired +
                 '}';
     }
 }
