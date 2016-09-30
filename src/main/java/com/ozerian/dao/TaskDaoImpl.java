@@ -11,8 +11,18 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * Implementation class of TaskDao interface with override methods
+ * with their realization.
+ */
 public class TaskDaoImpl implements TaskDao {
 
+    /**
+     * Method for addition task to database.
+     *
+     * @param task Task task for addition.
+     * @return boolean true - if addition is success, false - if not.
+     */
     @Override
     public boolean addTask(Task task) {
 
@@ -29,6 +39,11 @@ public class TaskDaoImpl implements TaskDao {
         return false;
     }
 
+    /**
+     * Method for obtaining of all actual tasks (not done).
+     *
+     * @return List of all tasks.
+     */
     @Override
     public List<Task> getAllTasks() {
         List<Task> tasks = new ArrayList<>();
@@ -47,6 +62,11 @@ public class TaskDaoImpl implements TaskDao {
         return tasks;
     }
 
+    /**
+     * Method for obtaining of all done tasks from database.
+     *
+     * @return List of all done tasks.
+     */
     @Override
     public List<Task> getAllDoneTasks() {
         List<Task> doneTasks = new ArrayList<>();
@@ -65,6 +85,12 @@ public class TaskDaoImpl implements TaskDao {
         return doneTasks;
     }
 
+    /**
+     * Make task is done by it's id.
+     *
+     * @param taskId int taskId.
+     * @return boolean if query is being success.
+     */
     @Override
     public boolean makeTaskDone(int taskId) {
         String sql = "INSERT INTO done_tasks SELECT * FROM tasks WHERE id= ?";
@@ -80,6 +106,12 @@ public class TaskDaoImpl implements TaskDao {
         return false;
     }
 
+    /**
+     * Method for removal task by it's id.
+     *
+     * @param taskId int task id for removal.
+     * @return boolean if removal from database. was success.
+     */
     @Override
     public boolean deleteTaskById(int taskId) {
         String sql = "DELETE FROM tasks WHERE id= ?";
@@ -95,6 +127,14 @@ public class TaskDaoImpl implements TaskDao {
     }
 
 
+    /**
+     * Private util method for addition task to list with check,
+     * if this task is expired (through java.util.Date "before" method).
+     *
+     * @param tasks List list for tasks addition.
+     * @param resultSet ResultSet for obtaining data from database.
+     * @throws SQLException possible sql exception.
+     */
     private void addTasksToList(List<Task> tasks, ResultSet resultSet) throws SQLException {
         Task task = new Task();
         task.setId(resultSet.getInt("id"));
