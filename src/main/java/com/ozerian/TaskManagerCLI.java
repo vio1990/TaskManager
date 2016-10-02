@@ -3,7 +3,7 @@ package com.ozerian;
 import com.ozerian.dao.TaskDao;
 import com.ozerian.dao.TaskDaoImpl;
 import com.ozerian.entity.Task;
-import com.ozerian.util.InOutData;
+import com.ozerian.util.InputDataHandler;
 
 import java.io.IOException;
 import java.text.ParseException;
@@ -29,12 +29,12 @@ public class TaskManagerCLI {
                 System.out.println("If you want to exit, please, enter \"3\"");
 
                 // define user's choice.
-                String choice = InOutData.enteredChoice();
+                String choice = InputDataHandler.enteredChoice();
 
                 switch (choice) {
                     // task addition.
                     case "1":
-                        Task task = InOutData.createTask();
+                        Task task = InputDataHandler.createTask();
                         taskDao.addTask(task);
                         break;
                     // show all tasks.
@@ -60,12 +60,12 @@ public class TaskManagerCLI {
                         }
 
                         System.out.println("If you have done some task enter \"1\". Back to the menu - \"2\". See list of done tasks - \"3\"");
-                        String currentChoice = InOutData.enteredChoice();
+                        String currentChoice = InputDataHandler.enteredChoice();
 
                         // Sections with "done task" making and "back to the menu".
                         if ("1".equals(currentChoice)) {
                             System.out.println("Please entered it's id");
-                            int taskId = InOutData.getDoneTaskId();
+                            int taskId = InputDataHandler.getDoneTaskId();
                             taskDao.makeTaskDone(taskId);
                         } else if ("3".equals(currentChoice)) {
                             List<Task> doneTasks = taskDao.getAllDoneTasks();

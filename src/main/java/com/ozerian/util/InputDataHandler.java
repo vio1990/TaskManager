@@ -12,7 +12,7 @@ import java.text.SimpleDateFormat;
 /**
  * Util class for work with streams and handling input user's data.
  */
-public final class InOutData {
+public final class InputDataHandler {
 
     /**
      * Method for definition of user choice.
@@ -28,13 +28,13 @@ public final class InOutData {
                 return result;
             } else {
                 System.out.println("Please, enter \"1\", \"2\" or \"3\"");
-                return InOutData.enteredChoice();
+                return InputDataHandler.enteredChoice();
             }
         }
     }
 
     /**
-     * Method for task creation woth input of task name, date and priority.
+     * Method for task creation with input of task name, date and priority.
      *
      * @return Task for addition it to database.
      * @throws IOException possible IO exception.
